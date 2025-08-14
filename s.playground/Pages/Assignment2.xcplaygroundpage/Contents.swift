@@ -115,8 +115,8 @@ func VectorZero() -> Vector2 {
     return (0,0);
 }
 
-func VectorUnit(degrees:Float) -> Vector2 {
-    return (cos(degrees), sin(degrees))
+func VectorUnit(radians:Float) -> Vector2 {
+    return (cos(radians), sin(radians))
 }
 
 let arr1 = [1,4,6,8]
