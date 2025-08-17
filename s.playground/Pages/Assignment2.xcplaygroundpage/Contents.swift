@@ -53,17 +53,17 @@ func greet(user:String, atTime:String) {
     func getTimeGreeting(time:String) -> String? {
         // find the colon to denote time of day.
         if let colon = time.firstIndex(of: ":") {
-            let hour = time[time.startIndex..<colon];
+            let hourText = time[time.startIndex..<colon];
             
-            if let hour_v = Int(hour) {
+            if let hourNumeric = Int(hourText) {
                
-                    if hour_v < 12 {
+                    if hourNumeric < 12 {
                         return "Good morning"
                     }
-                    else if hour_v < 18 {
+                    else if hourNumeric < 18 {
                         return "Good afternoon"
                     }
-                    else if hour_v < 24 {
+                    else if hourNumeric < 24 {
                         return "Good evening"
                     }
                     else {
@@ -97,11 +97,15 @@ func greet(user:String, atTime:String) {
     
 }
 
-greet(user: "Jjim", atTime: "14:32")   //  afternoon
+greet(user: "Jim", atTime: "14:32")   //  afternoon
 greet(user: "Mike", atTime: "spinach") //  should print default text
 greet(user: "Melissa", atTime: "4:00") //  morning
 greet(user: "Emily", atTime: "19:00")  //  evening
 
+/*
+ I'm curious as to if these values are pushed to the stack or pointers to them
+ On the one hand, copying is slow, but also cache locality could present problems for the pointer approach
+ */
 func addVector(_ a:Vector2, _ b:Vector2) -> Vector2 {
     return (a.0 + b.0 , a.1 + b.1)
 }
@@ -128,6 +132,7 @@ var favApps = ["Newpipe","Fedilab","ElementX"]
 print("My favorite apps in reverse order are \(Array<String>(favApps.reversed()))")
 
 var languages:Set<String> = ["Rust", "Ruby", "D", "Odin", "D" , "C", "C++", "Rust"]
+print(languages)
 
 typealias ProductId = String
 
