@@ -121,7 +121,6 @@ let tupleWithNames = (uName:"john", lastLogin:"July 10th")
 
 typealias Vector3 = (Float, Float, Float) // tuples can also be used to make type aliases
 
-
 func removeWhiteSpace(_ str:inout String) {
     var res = ""
     res.reserveCapacity(str.count)
@@ -130,10 +129,10 @@ func removeWhiteSpace(_ str:inout String) {
             res.append(chara)
         }
     }
-    str = res
+    str = res // are there move semantics in swift?
 }
 
-var testString = "  there is    a few types of whitespace\n in this string"
+var testString = "  there are    a few types of whitespace\n in this string"
 removeWhiteSpace(&testString)
 print(testString)
 
@@ -145,6 +144,13 @@ func emptyArrayOneAtATime(_ arr:inout [Int]) {
     }
 }
 
+func emptyArrayAtLeastOneMember(_ arr:inout [Int]) {
+    repeat {
+        if let popped = arr.popLast() {
+            print("popped: \(popped)")
+        }
+    } while arr.isEmpty
+}
 
 var demoArray = arrayBasic
 
