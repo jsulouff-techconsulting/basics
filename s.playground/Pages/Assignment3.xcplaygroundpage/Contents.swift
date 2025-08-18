@@ -82,14 +82,17 @@ for idx in stride(from:10, to: 0, by: -1) {
 
 var given = [1,2,3,4,5,6]
 
-for (index, i) in given.enumerated() {
+var index = 0
+for i in given {
     if i % 2 > 0 {
         //odd
         given.remove(at:index)
+        index -= 1
     }
     else {
         //even
         print(i)
+        index += 1
     }
 }
 
@@ -127,9 +130,10 @@ func removeWhiteSpace(_ str:inout String) {
             res.append(chara)
         }
     }
+    str = res
 }
 
-var testString = "  there is    a few types of whitespace in this string"
+var testString = "  there is    a few types of whitespace\n in this string"
 removeWhiteSpace(&testString)
 print(testString)
 
