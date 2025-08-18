@@ -71,9 +71,8 @@ func monthNumberToSeason(month:Int) -> String? {
 
 let studentTuple = (name:"Ryan", rollNumber:67, gpa:3.48)
 print("[using named access] Student \(studentTuple.name) is roll number \(studentTuple.rollNumber) and has a gpa of \(studentTuple.gpa)")
-print("[using named access] Student \(studentTuple.0) is roll number \(studentTuple.1) and has a gpa of \(studentTuple.2)")
+print("[using numeric access] Student \(studentTuple.0) is roll number \(studentTuple.1) and has a gpa of \(studentTuple.2)")
 
-var greeting = "Hello, playground"
 let arrayBasic = [12, 13, 19, 191, 0xFC, 82, 904, 129]
 
 for idx in stride(from:10, to: 0, by: -1) {
@@ -82,9 +81,10 @@ for idx in stride(from:10, to: 0, by: -1) {
 
 var given = [1,2,3,4,5,6]
 
+// how would you use a switch for this?
 var index = 0
 for i in given {
-    if i % 2 > 0 {
+    if i & 0b1 > 0 {
         //odd
         given.remove(at:index)
         index -= 1
@@ -117,7 +117,7 @@ else {
 
 let monoTypeTuple = (12,8,17) // tuples can have one type
 let manyTypeTuple = (12, "", false) // or many types in them
-let tupleWithNames = (uName:"john", lastLogin:"July 10th")
+let tupleWithNames = (uName:"john", lastLogin:"July 10th") //tuple fields can be named
 
 typealias Vector3 = (Float, Float, Float) // tuples can also be used to make type aliases
 
@@ -149,7 +149,7 @@ func emptyArrayAtLeastOneMember(_ arr:inout [Int]) {
         if let popped = arr.popLast() {
             print("popped: \(popped)")
         }
-    } while arr.isEmpty
+    } while !arr.isEmpty
 }
 
 var demoArray = arrayBasic
