@@ -50,7 +50,7 @@ print(Seasons.winter.genMessage())
 print(Seasons.summer.genMessage())
 
 enum LoginState {
-    case loggedIn(uname:String)
+    case loggedIn (uname:String)
     case loggedOut
 }
 
@@ -238,7 +238,4 @@ var triDemoB = triDemoA
 triDemoB.base = 80
 
 print("triangle A has changed its base value from 10 to \(triDemoA.base)")
-
-var greeting = "Hello, playground"
-
-//: [Next](@next)
+print(triDemoB.base)
