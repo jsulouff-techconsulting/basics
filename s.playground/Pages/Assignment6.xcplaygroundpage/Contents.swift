@@ -38,11 +38,21 @@ let plus2 =  { (value:Int) -> Int in
         return value + 2
 }
 
+func templateTest<T,RT> (argument:T, closure:(T) -> RT) -> RT {
+    return closure(argument);
+}
+
 func operateOnArray<T>(array:inout [T], operation:(T) -> T) {
     for (index, value) in array.enumerated() {
         array[index] = operation(value);
     }
 }
+
+let toString = { (v:Int) -> String in
+    return String(v)
+}
+
+print((templateTest(argument: 14, closure: toString)))
 
 let sampleIntArray = [12, 14, 1, 7, 999, 84, 2025]
 var demo1 = sampleIntArray
@@ -57,10 +67,14 @@ let mulClosure = { (v1:Int, v2:Int, out:inout Int) in
 // I think this is what he means?
 // A closure cannot have static variables in it.
 // I don't think swift allows mutating static values at all, for good reason (thread safety)
-func makeCounter() -> (inout Int) -> Void {
+
+// I wasnt aware of closures ability to capture values
+func makeCounter() -> (inout Int) -> Int {
+    var counter = 0
     return {
         (value:inout Int) in
-        value += 1
+        counter += 1
+        return counter
     }
 }
 
@@ -72,4 +86,3 @@ func performLater(method:@escaping @Sendable () -> Void) {
     DispatchQueue(label: "delay").asyncAfter(deadline: .now() + 1, execute: method)
     print("thread dispatched.")
 }
-
