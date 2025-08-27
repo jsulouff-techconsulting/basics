@@ -28,17 +28,17 @@ let sentences = ["I have it!", "That's not right", "you cant do that.", "I'll al
 print(sentences.flatMap( {
     sentence in
     return sentence.split(separator: " ")
-}
-    ))
+    }
+))
 
 let names = ["paul", "eric", "lisa", "simon", "aaa123"]
 let namesSorted = names.sorted()
 print(namesSorted)
 
-let multarray = Array([1,2,3,4])
+// ???
+// let multarray:[Int] = Array( 1...4 )
+let multarray:[Int] = Array( [1,2,3,4] )
 
-// idgi, this is exactly what the docs show
-//
 let multd = multarray.reduce(1, { x,y in
     x * y
     })
@@ -164,6 +164,8 @@ protocol BinaryTreeNode {
     func node() -> NodeData
 }
 
+
+
 protocol QueueProtocol {
     associatedtype Element
     func add(next:Element)
@@ -208,17 +210,21 @@ class StringQueue : QueueProtocol {
     
     func pop() -> String {
         let popped = self.queue[0]
-        self.shiftRight()
+        self.shiftLeft()
         return popped
     }
     
-    private func shiftRight() {
+    private func shiftLeft() {
         for idx in 1..<queue.count {
             self.queue[idx - 1] = self.queue[idx]
         }
+        self.queue.popLast()
     }
 }
 
+
+let txts = Double.nan
+txts.isNaN
 /*
  // Doesnt wanna work
 func isInOrder<T:QueueProtocol> where QueueProtocol.Element: Comparable (queue:T) -> Bool {
