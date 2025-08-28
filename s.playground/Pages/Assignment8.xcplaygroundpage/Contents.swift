@@ -25,7 +25,7 @@ enum NetworkError: Error {
 }
 
 func fetchData(url:String) throws(NetworkError) -> String {
-    if url.contains("http*.") {
+    if url.contains(try! Regex("http*.*")) {
         return "DMX 4040124"
     }
     else {
@@ -33,12 +33,15 @@ func fetchData(url:String) throws(NetworkError) -> String {
     }
 }
 
+print("valid url: \(String(describing:try? fetchData(url: "https://youtube.com")))") //some
+print("bad url: \((try? fetchData(url: "skjhdfksjh"))as Any)") // none
+
 enum MathError: Error {
     case domainError
 }
 
 func sqrt(of:Double) throws(MathError) -> Double {
-    guard of <= 0 else {
+    guard of >= 0 else {
         throw .domainError
     }
     
@@ -46,19 +49,19 @@ func sqrt(of:Double) throws(MathError) -> Double {
 }
 
 var res = try? sqrt(of: 16)
-print(res)
+print(res as Any)
 res = try? sqrt(of: -36)
-print(res)
+print(res as Any)
 
 do {
-    try print(sqrt(of: 2))
+    try print("sqrt 2: \(sqrt(of: 2))")
 }
 catch {
     print(error)
 }
 
 do {
-    try print(sqrt(of:-8))
+    try print("sqrt -8: \(sqrt(of:-8))")
 }
 catch(let e) {
     print(e)
@@ -92,6 +95,12 @@ class Car {
     }
 }
 
+let car1 = Car(brand: "Chevrolet", doors: 2)
+print(car1.doors)
+
+let car2 = Car(brand: "Honda")
+print(car2.doors)
+
 struct EmailAddress {
     var name:String
     var domain:String
@@ -112,6 +121,10 @@ struct EmailAddress {
     }
     
 }
+
+print("valid email:   \(String(describing: EmailAddress(address: "a@b.com")))")
+print("invalid email: \(String(describing: EmailAddress(address: "ab.com")))")
+print("invalid email: \(String(describing: EmailAddress(address: "a@b.c@o@m")))")
 
 struct Circle {
     var radius:Double

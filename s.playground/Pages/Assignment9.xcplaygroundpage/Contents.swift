@@ -65,7 +65,7 @@ class DataManager {
     }
     
     func fetch() -> String {
-        return dataSourceService.getData() + self.dataSuffix
+        return dataTransformMethod(dataSourceService.getData()) + self.dataSuffix
     }
     
     func setDataSuffix(suffix:String) {
@@ -81,6 +81,7 @@ print("data from network: \(prodDataManager.fetch())\ndata from mock: \(mockData
 
 prodDataManager.dataTransformMethod = {str in str.uppercased()}
 prodDataManager.dataSuffix = "_NON_TRANSFORM"
+prodDataManager.setDataSuffix(suffix: "_TRANSFORM")
 
 print("Prod data manager after altering dependencies:\(prodDataManager.fetch())")
 
@@ -101,16 +102,23 @@ do {
         }
     }
     
+    func printArrayBufferAddress(array: [Int]) {
+        array.withUnsafeBufferPointer { buffer in
+            print("Buffer address:", buffer.baseAddress!)
+        }
+    }
+    
     let a = [1,2,3]
     var b = a
     
     print("B and A:")
-    printAddress(v: a) ; printAddress(v: b)
+    printArrayBufferAddress(array:  a) ; printArrayBufferAddress(array: b)
     
+    b.append(84)
     b[0] = 12
     
     print("B and A (after mutating b):")
-    printAddress(v: a) ; printAddress(v: b)
+    printArrayBufferAddress(array: a) ; printArrayBufferAddress(array: b)
     
     let sampleFirst = Manager()
     let sample = [sampleFirst]
@@ -142,15 +150,29 @@ catch {
 class B {
     weak var aRef:A?
     init() {
-        
+        print("B Allocated")
+    }
+    deinit {
+        print("B freed")
     }
 }
 
 class A {
     var bRef:B?
+    init() {
+        print("a Allocated")
+    }
+    deinit {
+        print("a freed")
+    }
 }
 
-var b = B()
-var a = A()
-a.bRef = b
-b.aRef = a
+var b:B? = B()
+var a:A? = A()
+a?.bRef = b
+b?.aRef = a
+
+a = nil
+b = nil
+
+print(b)
